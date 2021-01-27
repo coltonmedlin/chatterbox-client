@@ -19,18 +19,25 @@ var App = {
 
   fetch: function(callback = ()=>{}) {
     Parse.readAll((data) => {
-      // examine the response from the server request:
       console.log(data.results);
       var html = '';
+      //branching logic
+        //have I run this data before?
+          //pass data to renderOld otherwise
+          //pass data to renderNew
       data.results.forEach(message => {
-        //sanitize
-        message.text = App.sanitize(message.text);
-        message.username = App.sanitize(message.username);
-        html += MessageView.render(message);
+        if (message.text) {
+          message.text = App.sanitize(message.text);
+          message.username = App.sanitize(message.username);
+          html += MessageView.render(message);
+        }
       });
-      //append to the dom
-      console.log(html);
-      MessagesView.render(html);
+      if (MessagesView.lastAddedMessage) {
+        MessagesView.renderNew();
+      } else {
+        MessagesView.renderOld(html);
+        MessagesView.lastAddedMessage = data.results[0].id;
+      }
       callback();
     });
   },
@@ -45,31 +52,22 @@ var App = {
     FormView.setStatus(false);
   },
 
-  // sanitize: function(string) {
-  //   let sanitizedString = '';
-  //   // / escape: /\{\{\-(.+?)\}\}/g
-  //   let dictionary = {
-  //     "&": "&amp;",
-  //     "<": "&lt;",
-  //     ">": "&gt;",
-  //     '"': "&quot;",
-  //     "'": "&#039;"
-  //   };
-  //   //create dictionary obj
-  //     //loop over string
-  //   for (let i = 0; i < string.length; i++) {
-  //     if (dictionary[string[i]]) {
-  //       sanitizedString += dictionary[string[i]];
-  //     } else {
-  //       sanitizedString += string[i];
-  //     }
-  //   }
-  //   return sanitizedString;
-  // }
-
   sanitize: function(string) {
     let sanitizedString = '';
-    sanitizedString = string.replace('/\{\{\-(.+?)\}\}/g');
+    let dictionary = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    };
+    for (let i = 0; i < string.length; i++) {
+      if (dictionary[string[i]]) {
+        sanitizedString += dictionary[string[i]];
+      } else {
+        sanitizedString += string[i];
+      }
+    }
     return sanitizedString;
   }
 
