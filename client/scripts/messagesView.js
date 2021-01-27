@@ -10,19 +10,19 @@ var MessagesView = {
     }, 1000);
   },
 
-
-  render: function(data) {
+  render: function(arr) {
+    $('#chats').html('');
     var html = '';
-    data.results.forEach(message => {
+    arr.forEach(message => {
       if (message.text && message.username) {
         message.text = App.sanitize(message.text);
         message.username = App.sanitize(message.username);
+        message.roomname = App.sanitize(message.roomname);
+        // html += MessageView.render(message);
         html += MessageView.render(message);
       }
     });
-    $('#chats').html('');
     $('#chats').append(html);
-  },
-
+  }
 
 };
