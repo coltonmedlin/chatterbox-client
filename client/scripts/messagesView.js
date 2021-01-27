@@ -7,7 +7,7 @@ var MessagesView = {
   initialize: function() {
     setInterval(() => {
       App.fetch();
-    }, 1000);
+    }, 50000);
   },
 
   render: function(arr) {
@@ -18,7 +18,7 @@ var MessagesView = {
         message.text = App.sanitize(message.text);
         message.username = App.sanitize(message.username);
         message.roomname = App.sanitize(message.roomname);
-        // html += MessageView.render(message);
+        RoomsView.initialize(message.roomname);
         html += MessageView.render(message);
       }
     });
