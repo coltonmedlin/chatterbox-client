@@ -21,10 +21,6 @@ var App = {
     Parse.readAll((data) => {
       console.log(data.results);
       var html = '';
-      //branching logic
-        //have I run this data before?
-          //pass data to renderOld otherwise
-          //pass data to renderNew
       data.results.forEach(message => {
         if (message.text) {
           message.text = App.sanitize(message.text);
@@ -32,12 +28,8 @@ var App = {
           html += MessageView.render(message);
         }
       });
-      if (MessagesView.lastAddedMessage) {
-        MessagesView.renderNew();
-      } else {
-        MessagesView.renderOld(html);
-        MessagesView.lastAddedMessage = data.results[0].id;
-      }
+      MessagesView.render(data);
+      MessagesView.lastAddedMessage = data.results[0].id;
       callback();
     });
   },

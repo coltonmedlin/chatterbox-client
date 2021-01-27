@@ -7,7 +7,7 @@ var FormView = {
   },
 
   //where is this being invoked from?
-    //gets invoked by user click submit
+  //gets invoked by user click submit
   handleSubmit: function(event) {
     // Stop the browser from submitting the form
     event.preventDefault();
@@ -18,11 +18,12 @@ var FormView = {
     //SEND THE message to the server
     Parse.create(mssg);
     //update the DOM
+    App.fetch();
   },
 
   setStatus: function(active) {
     var status = active ? 'true' : null;
     FormView.$form.find('input[type=submit]').attr('disabled', status);
-  }
+  },
 
 };
