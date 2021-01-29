@@ -4,10 +4,15 @@ var App = {
 
   username: 'anonymous',
 
+  roomname: 'anonymous',
+
+  lastAddedMessage: '',
+
   initialize: function() {
     App.username = window.location.search.substr(10);
 
     FormView.initialize();
+    RoomsView.filter();
     RoomsView.initialize();
     MessagesView.initialize();
 
@@ -17,8 +22,11 @@ var App = {
 
   },
 
-  fetch: function(callback = ()=>{}) {
+  fetch: function(callback = ()=>{}, filter) {
     Parse.readAll((data) => {
+      if (filter) {
+        data.results = filter(data.results, App.roomname);
+      }
       MessagesView.render(data.results);
       callback();
     });
