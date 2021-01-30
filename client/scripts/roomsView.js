@@ -1,5 +1,3 @@
-// Allow users to create rooms and enter existing rooms - Rooms are defined by the .roomname property of messages, so you'll need to filter them somehow.
-
 var RoomsView = {
 
   $button: $('#rooms button'),
@@ -14,7 +12,6 @@ var RoomsView = {
         return false;
       }
     }
-    //delete this in order to make spec pass?
     RoomsView.$select.append($('<option>', {
       value: 1,
       text: `${room}`
@@ -66,21 +63,3 @@ var RoomsView = {
   }
 
 };
-
-// describe('chatroom behavior', function() {
-//   it('should be able to add messages to the DOM', function() {
-//     var message = {
-//       username: 'Mel Brooks',
-//       text: 'Never underestimate the power of the Schwartz!',
-//       roomname: 'lobby'
-//     };
-//     MessagesView.renderMessage(message);
-//     expect($('#chats').children().length).to.equal(1);
-//   });
-
-//   it('should be able to add rooms to the DOM', function() {
-//     RoomsView.renderRoom('superLobby');
-//     expect($('#rooms select').children().length).to.equal(1);
-//   });
-
-// });
