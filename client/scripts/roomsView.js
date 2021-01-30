@@ -24,7 +24,7 @@ var RoomsView = {
 
   addRoomButton: function() {
     RoomsView.$button.on('click', () => {
-      console.log('i was clucked');
+      Rooms.add();
       var name = prompt('Please enter your room name', '');
       if (name === null || name === '') {
         txt = 'You cancelled the prompt.';

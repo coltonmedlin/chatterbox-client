@@ -15,6 +15,7 @@ var App = {
     RoomsView.filter();
     RoomsView.initialize();
     MessagesView.initialize();
+    Friends.listener();
     RoomsView.addRoomButton();
 
     // Fetch initial batch of messages

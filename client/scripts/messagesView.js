@@ -7,7 +7,6 @@ var MessagesView = {
   initialize: function() {
     setInterval(() => {
       App.fetch(()=>{}, MessagesView.filterNew);
-      console.log('refreshed');
     }, 1000);
   },
 
