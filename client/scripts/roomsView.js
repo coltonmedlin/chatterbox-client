@@ -14,11 +14,34 @@ var RoomsView = {
         return false;
       }
     }
+    //delete this in order to make spec pass?
     RoomsView.$select.append($('<option>', {
       value: 1,
       text: `${room}`
     }));
     return true;
+  },
+
+  addRoomButton: function() {
+    RoomsView.$button.on('click', () => {
+      console.log('i was clucked');
+      var name = prompt('Please enter your room name', '');
+      if (name === null || name === '') {
+        txt = 'You cancelled the prompt.';
+      } else {
+        txt = 'cool ' + name;
+      }
+      RoomsView.renderRoom(name);
+    });
+  },
+
+  renderRoom: function(str) {
+    console.log($('#rooms select').children());
+    let room = App.sanitize(str);
+    RoomsView.$select.append($('<option>', {
+      value: 1,
+      text: `${room}`
+    }));
   },
 
   filter: function() {
@@ -36,9 +59,28 @@ var RoomsView = {
           }
           return filtered;
         };
+        $('#chats').html('');
         App.fetch(()=>{}, filter);
       }
     });
   }
 
 };
+
+// describe('chatroom behavior', function() {
+//   it('should be able to add messages to the DOM', function() {
+//     var message = {
+//       username: 'Mel Brooks',
+//       text: 'Never underestimate the power of the Schwartz!',
+//       roomname: 'lobby'
+//     };
+//     MessagesView.renderMessage(message);
+//     expect($('#chats').children().length).to.equal(1);
+//   });
+
+//   it('should be able to add rooms to the DOM', function() {
+//     RoomsView.renderRoom('superLobby');
+//     expect($('#rooms select').children().length).to.equal(1);
+//   });
+
+// });

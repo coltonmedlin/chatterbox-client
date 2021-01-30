@@ -12,7 +12,10 @@ var FormView = {
     let mssg = {};
     mssg.username = App.sanitize(App.username);
     mssg.text = App.sanitize(FormView.$form.serializeArray()[0].value);
-    mssg.roomname = App.sanitize('');
+    let rm = RoomsView.$select.find('option:selected').text();
+    if (rm !== 'SEE ALL ROOMS') {
+      mssg.roomname = App.sanitize(rm);
+    }
     Parse.create(mssg);
     App.fetch();
   },

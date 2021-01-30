@@ -15,6 +15,7 @@ var App = {
     RoomsView.filter();
     RoomsView.initialize();
     MessagesView.initialize();
+    RoomsView.addRoomButton();
 
     // Fetch initial batch of messages
     App.startSpinner();
@@ -24,6 +25,7 @@ var App = {
 
   fetch: function(callback = ()=>{}, filter) {
     Parse.readAll((data) => {
+      App.lastAddedMessage = data.results[0].objectId;
       if (filter) {
         data.results = filter(data.results, App.roomname);
       }
